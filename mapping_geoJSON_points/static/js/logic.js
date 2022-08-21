@@ -30,7 +30,23 @@ let sanFranAirport =
             "coordinates":[-122.375,37.61899948120117]}}
 ]};
 
-L.geoJSON(sanFranAirport).addTo(myMap);
+// L.geoJSON(sanFranAirport, {
+//   // We turn each feature into a marker on the map.
+//   pointToLayer: function(feature, latlng) {
+//     console.log(feature);
+//     return L.marker(latlng)
+//     .bindPopup("<h2>" + feature.properties.city + "</h2>");
+// //   }
+
+// }).addTo(myMap);
+
+L.geoJSON(sanFranAirport, {
+  onEachFeature: function(feature, layer) {
+    console.log(layer);
+    layer.bindPopup("<h4>Airport code: " + feature.properties.faa + "<hr class='solid'>" +
+    "Airport name: " + feature.properties.name + "</h4>");
+  }
+}).addTo(myMap);
 
 //  create the tile layer to serve as map background
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
